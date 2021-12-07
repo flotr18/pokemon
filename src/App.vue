@@ -1,28 +1,44 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  {{ dada }}
+  <main_pokemon></main_pokemon>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from "axios"
+import main_pokemon from './components/Main_Pokemon.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    main_pokemon
+  },
+  data () {
+    return {
+      dada: null
+    }
+  },
+  mounted() {
+    axios
+      .get('https://pokeapi.co/api/v2/pokemon/1')
+      .then(response => (this.dada = response.data.abilities[0].ability.name))
+      .catch(error => console.log(error))
+
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+@font-face {
+  font-family: "Pokemon_font";
+  src: local("Pokemon_font"),
+      url("assets/Pokemon Solid.ttf");
 }
+
+#app {
+  font-family: Pokemon_font,serif;
+}
+
 </style>
